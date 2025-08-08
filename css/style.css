@@ -1,0 +1,39 @@
+.woocommerce-tabs.wc-tabs-wrapper #tab-title-reviews{display: none;}
+.product-rating-container{margin: 40px auto 40px;}
+.glint-review-container .av_one_half{display: inline-block; float: left;}
+.glint-review-container .av_one_half.el_before_av_one_half{ margin-left: 0;}
+#top #reviews.glint-review-container h2{font-size: 1rem; letter-spacing: 0.5px; text-transform: capitalize; font-family: "Montserrat", sans-serif; color: #0d3934; margin-bottom: 20px;}
+#top #reviews .glint-review-list .woocommerce-Reviews-title span{font-size: 1em;}
+.glint-review-list .comment_container{box-shadow: 1px 1px 7px 0px rgba(0, 0, 0, 0.13), 0px 0px 2px 0px rgba(0, 0, 0, 0.05); display: inline-block; width: 98%; margin: 10px 7px 5px 5px; padding: 10px 15px 5px;}
+#reviews #comments.glint-review-list .comment_container .avatar{position: relative; top: 12px; left: 12px; width: 50px;}
+#reviews #comments.glint-review-list .comment_container .comment-text{margin: 0 0 0 65px;}
+#top #reviews .glint-review-form #commentform label{font-size: 1rem; font-weight: 500; position: unset;}
+#top #reviews .glint-review-form #commentform #comment{background: #f8f8f8;}
+#top #reviews .glint-review-form #commentform #comment:focus{box-shadow: none; }
+#top #reviews .glint-review-form #commentform #author{background: #f8f8f8; width: 100%; margin-bottom: 0;}
+#top #reviews .glint-review-form #commentform #email{background: #f8f8f8; width: 100%; margin-bottom: 0;}
+#top #review_form #respond .comment-form-rating select{width: 100%;}
+
+.glint-product-review-container{margin: 20px auto 80px; display: inline-block; width: 100%;}
+.glint-review-heading{width: 100%; margin: 0 auto 25px;}
+.glint-product-review-list{width: 73%; margin-left: 2%; float: left;list-style: none; display: flex; flex-wrap: wrap; float: right;}
+.glint-product-review-list .no-review{margin: 20px 0 0 2%;}
+.glint-product-review-item{position: relative; width: 47%; margin: 0 3% 40px 0; box-shadow: 1px 1px 7px 0px rgba(0, 0, 0, 0.13), 0px 0px 2px 0px rgba(0, 0, 0, 0.05); padding: 25px 30px 10px; border-radius: 5px; background: #fdfdfd;}
+.glint-product-review-item .reviewr-name{margin: 0; font-size: 1.25rem; font-weight: 700;}
+.glint-product-review-item .review-date{margin: 0; font-size: 0.85rem; color: #999;}
+.glint-product-review-item .rating-stars-container{width: 80px; justify-content: right; position: absolute; right: 20px; top: 15px;}
+.glint-product-review-item .review-images{width: 100%;display: flex; flex-wrap: wrap; margin-top: 15px;}
+.glint-product-review-item .review-images a{width: 150px; display: inline-block;}
+.glint-product-review-item .review-images img{width: calc(100% - 5px); margin-right: 5px;}
+.glint-product-review-item .review-content{margin-top: 20px;}
+
+.review-score-container{width: 25%; display: inline-block; float: left; margin-top: 20px;}
+.review-score-headline .rating-title{text-align: center; margin-bottom: 0; font-size: 1.5rem;}
+.review-score-headline h5{text-align: center; margin-top: 0; font-size: 1.5rem;}
+.review-score-container a{text-align: center; width: 100%; display: inline-block; padding: 15px; background: #0d3934; border: 1px solid #0a2421; color: #fff; border-radius: 10px; transition: 0.5s;  margin-top: 20px;}
+.review-score-container a:hover{background: #fff; border: 1px solid #0d3934; color: #0d3934; border-radius: 25px;}
+.review-score-container .rating-stars-container .rating-stars{font-size: 36px; width: 30px;}
+
+.category-page-review-list-container{margin: 50px auto;}
+.category-page-review-list-container h2{margin: 20px auto 30px;}
+.category-page-review-list-container .glint-product-review-list{width: 100%; margin: 0;}
