@@ -1,6 +1,8 @@
 <?php
 
 // Add a menu item for the plugin in the admin menu 
+
+
 function external_product_review_menu() {
     add_menu_page(
         'CHT Reviews',          // Page title
@@ -14,22 +16,15 @@ function external_product_review_menu() {
 }
 add_action('admin_menu', 'external_product_review_menu');
 
-//add css
+
 function external_product_review_admin_style() 
 {
-        wp_register_style( 'custom_wp_admin_css', plugin_dir_url(dirname(__FILE__)) . 'css/style.css', false, '1.0.0' );
-        wp_enqueue_style( 'custom_wp_admin_css' );
+    wp_enqueue_style( 'glint-review-custom_admin_css', plugin_dir_url(dirname(__FILE__)) . 'css/style.css', false, '1.0.0' );
+    wp_enqueue_style('glint-review-sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css');
+    wp_enqueue_script('glint-review-sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), null, true);
 }
 
-add_action( 'admin_enqueue_scripts', 'wpdocs_enqueue_custom_admin_style' ); 
-
-//add js
-function external_product_review_enqueue_scripts() 
-{
-    wp_enqueue_style('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css');
-    wp_enqueue_script('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), null, true);
-}
-add_action('admin_enqueue_scripts', 'external_product_review_enqueue_scripts');
+add_action( 'admin_enqueue_scripts', 'external_product_review_admin_style' ); 
 
 // Callback function to render the Sending List page
 function external_product_review_list_page() 
@@ -295,4 +290,3 @@ function delete_review()
     }
 }
 add_action('wp_ajax_delete_review', 'delete_review');
-

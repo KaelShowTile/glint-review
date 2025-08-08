@@ -23,4 +23,3 @@ function glint_review_enqueue_styles() {
     wp_enqueue_style('glint-review-style', $css_url, array(), '1.0', 'all');
 }
 add_action('wp_enqueue_scripts', 'glint_review_enqueue_styles');
-?>
