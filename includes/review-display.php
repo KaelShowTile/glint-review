@@ -77,7 +77,7 @@ function glint_show_product_review($product_id)
                     $images = explode(',', $review->review_imgs);
                     $output .= '<div class="review-images">';
                     foreach ($images as $image) {
-                        $output .= '<a href="/submit-review/' . $image . '" lightbox-added><img src="/submit-review/' . $image . '" alt="Review Image" "></a>';
+                        $output .= '<a href="' . GLINT_WC_PRODUCT_REVIEW_URL . 'submit-review/' . $image . '" lightbox-added><img src="/submit-review/' . $image . '" alt="Review Image" "></a>';
                     }
                     $output .= '</div>';
                 }
@@ -128,7 +128,7 @@ function glint_show_product_review($product_id)
 
     $output .= '</div>';
 
-    $output .= '<a href="/submit-review/submit-form.html#product_id=' . $product_id . '&product_name=' . $product_name . '&product_link=' . $product_link . '" id="submit-review-btn" target="_blank" rel="nofollow">Post Your Review</a>';
+    $output .= '<a href="' . GLINT_WC_PRODUCT_REVIEW_URL . 'submit-review/submit-form.php#product_id=' . $product_id . '&product_name=' . $product_name . '&product_link=' . $product_link . '" id="submit-review-btn" target="_blank" rel="nofollow">Post Your Review</a>';
 
     $output .= '</div>';
 
