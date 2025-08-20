@@ -60,7 +60,7 @@ function glint_show_product_review($product_id)
 
                 //full stars
                 for ($i = 1; $i <= $full_stars; $i++){
-                     $output .= '<span class="rating-stars filled">&starf;</span>';
+                    $output .= '<span class="rating-stars filled">&starf;</span>';
                 }
                 //half star
                 if ($half_star){
@@ -134,6 +134,27 @@ function glint_show_product_review($product_id)
 
     $output .= '</div>';
 
+    if($total_review > 0){
+
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'AggregateRating',
+            '@id' => $product_link . '#aggregateRating', 
+            'itemReviewed' => [
+                '@type' => 'Product',
+                '@id' => $product_link . '#product' 
+            ],
+            'ratingValue' => $average_score,
+            'reviewCount' => $total_review,
+            'bestRating' => '5',
+            'worstRating' => '1',
+            'ratingExplanation' => 'Reviews from verified customers'
+        ];
+
+        $output .= '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES) . '</script>';
+    }
+
     return $output;
+    
 
 }

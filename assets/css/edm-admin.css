@@ -1,0 +1,17 @@
+#glint-edm-setting-form .input-section p{
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 20px auto 0;
+}
+
+#glint-edm-setting-form .input-section .wp-editor-wrap{
+    margin-top: -30px;
+}
+
+#glint-edm-setting-form .input-section input[type="text"]{
+    width: 100%;
+}
+
+#glint-edm-setting-form #save-edm-settings{
+    margin-top: 30px;
+}

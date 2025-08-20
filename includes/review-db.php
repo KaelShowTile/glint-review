@@ -6,9 +6,9 @@
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         $charset_collate = $wpdb->get_charset_collate();
-        $review_table_name = 'glint_review';
-        $email_table_name = 'glint_review_feedback_email';
-        $email_setting_table_name = 'glint_review_email_setting';
+        $review_table_name = $wpdb->prefix . 'glint_review';
+        $email_table_name = $wpdb->prefix . 'glint_review_feedback_email';
+        $email_setting_table_name = $wpdb->prefix . 'glint_review_email_setting';
 
         $review_table_sql = "CREATE TABLE $review_table_name (
             review_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -32,8 +32,8 @@
             review_item_link VARCHAR(255) NOT NULL DEFAULT '',
             check_reviewed BIGINT(20) UNSIGNED NOT NULL,
             first_send_date DATE NOT NULL,
+            next_send_date DATE NOT NULL,
             send_times BIGINT(20) UNSIGNED NOT NULL,
-            review_date DATE NOT NULL,
             PRIMARY KEY (email_id)
         ) $charset_collate;";
 

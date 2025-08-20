@@ -17,11 +17,9 @@ define('GLINT_WC_PRODUCT_REVIEW_URL', plugin_dir_url(__FILE__));
 require_once plugin_dir_path(__FILE__) . 'includes/review-db.php';
 require_once plugin_dir_path(__FILE__) . 'includes/review-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/review-display.php';
-require_once plugin_dir_path(__FILE__) . 'includes/review-setting.php';
 require_once plugin_dir_path(__FILE__) . 'includes/email-create.php';
 require_once plugin_dir_path(__FILE__) . 'includes/email-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/email-setting.php';
-require_once plugin_dir_path(__FILE__) . 'includes/email-sending.php';
 require_once plugin_dir_path(__FILE__) . 'includes/corn-job.php';
 
 //Add css to frontend
@@ -41,6 +39,21 @@ register_deactivation_hook(__FILE__, function() {
     //Glint_WC_Product_Review_DB::cleanup();
 });
 
+register_activation_hook(__FILE__, 'glint_schedule_email_cron');
+function glint_schedule_email_cron() {
+    if (!wp_next_scheduled('glint_daily_email_check')) {
+        wp_schedule_event(time(), 'hourly', 'glint_daily_email_check');
+    }
+}
+ 
+register_deactivation_hook(__FILE__, 'glint_remove_email_cron');
+function glint_remove_email_cron() {
+    wp_clear_scheduled_hook('glint_daily_email_check');
+}
+
+// Add the cron hook
+add_action('glint_daily_email_check', 'glint_check_and_send_review_emails');
+
 // Register admin menu 
 function external_product_review_menu() {
     add_menu_page(
@@ -55,8 +68,8 @@ function external_product_review_menu() {
 
     add_submenu_page(
         'cht-wc-product-reviews',                   // Parent slug
-        'All Reviews',                              // Page title
-        'All Reviews',                              // Menu title
+        'Reviews',                                  // Page title
+        'Reviews',                                  // Menu title
         'manage_options',                           // Capability
         'cht-wc-product-reviews',                   // Menu slug (same as parent makes it first submenu)
         'glint_wc_product_review_list_admin'        // Callback (same as parent)
@@ -64,28 +77,19 @@ function external_product_review_menu() {
 
     add_submenu_page(
         'cht-wc-product-reviews',                   // Parent slug
-        'Review Setting',                           // Page title
-        'Review Setting',                           // Menu title
+        'Emails',                                   // Page title
+        'Emails',                                   // Menu title
         'manage_options',                           // Capability
-        'cht-wc-reviews-setting',                          // Menu slug (same as parent makes it first submenu)
-        'glint_wc_product_review_setting_admin'     // Callback (same as parent)
-    );
-
-    add_submenu_page(
-        'cht-wc-product-reviews',                   // Parent slug
-        'Email List',                               // Page title
-        'Email List',                               // Menu title
-        'manage_options',                           // Capability
-        'cht-wc-email-list',                               // Menu slug (same as parent makes it first submenu)
+        'cht-wc-email-list',                        // Menu slug (same as parent makes it first submenu)
         'glint_wc_product_review_email_list_admin'  // Callback (same as parent)
     );
 
     add_submenu_page(
         'cht-wc-product-reviews',                   // Parent slug
-        'EDM Setting',                              // Page title
-        'EDM Setting',                              // Menu title
+        'Settings',                                 // Page title
+        'Settings',                                 // Menu title
         'manage_options',                           // Capability
-        'cht-wc-edm-setting',                              // Menu slug (same as parent makes it first submenu)
+        'cht-wc-edm-setting',                       // Menu slug (same as parent makes it first submenu)
         'glint_wc_product_review_edm_setting_admin' // Callback (same as parent)
     );
 }
