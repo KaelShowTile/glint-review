@@ -91,6 +91,13 @@ function glint_wc_product_review_edm_setting_admin() {
             </div>
 
             <button type="submit" id="save-edm-settings" class="button-primary">Save Settings</button>
+
+            <div style="margin-top: 30px; padding: 20px; background: #f5f5f5; border: 1px solid #ddd;">
+                <h2>Email Preview</h2>
+                <p>Preview how your email will look with the current settings:</p>
+                <a href="<?php echo admin_url('admin.php?page=cht-wc-edm-setting&glint_preview_email=1'); ?>" 
+                class="button button-primary" target="_blank">Preview Email</a>
+            </div>
         </form>
     </div>
 
@@ -213,3 +220,40 @@ function save_all_edm_setting(){
 }
 
 add_action('wp_ajax_save_edm_settings', 'save_all_edm_setting');
+
+
+// Add email preview functionality
+add_action('admin_init', 'glint_email_preview_handler');
+function glint_email_preview_handler() {
+    if (isset($_GET['glint_preview_email']) && current_user_can('manage_options')) {
+        // Generate a test email
+        $email_content = glint_generate_test_email();
+        
+        // Display the email
+        echo $email_content;
+        exit;
+    }
+}
+
+// Generate a test email with sample data
+function glint_generate_test_email() {
+    // Get email settings
+    $settings = get_all_edm_setting();
+    
+    // Create a mock email record with sample data
+    $mock_email_record = (object) [
+        'email_id' => 999,
+        'order_id' => 12345,
+        'customer_name' => 'Kael Testing',
+        'customer_email' => 'kaelshowtile@gmail.com',
+        'review_item' => 'Sample Tile Product',
+        'review_item_link' => get_site_url() . '/product/mineral-quartz-matt-tile-200x200-code02309/',
+        'check_reviewed' => 0,
+        'first_send_date' => date('Y-m-d'),
+        'next_send_date' => date('Y-m-d'),
+        'send_times' => 0
+    ];
+    
+    // Generate the email content
+    return glint_generate_email_content($mock_email_record, $settings);
+}
