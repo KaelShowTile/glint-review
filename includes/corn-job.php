@@ -84,6 +84,7 @@ function glint_generate_email_content($email_record, $settings) {
     </head>
     <body style="font-family: Verdana, sans-serif; color: #333; width: 80%; max-width: 700px; margin: 0 auto; padding: 20px;">
         <div style="background-color: #f9f9f9; padding: 30px; border-radius: 10px;">
+            <p style="margin-bottom:20px;">Dear ' . esc_html($name) . ',</p>
             <!-- Content before button -->
             <div style="margin-bottom: 30px;">
                 ' . wpautop($content_before) . '
