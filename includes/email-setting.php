@@ -163,11 +163,11 @@ function save_all_edm_setting(){
         'sender' => sanitize_text_field($_POST['sender']),
         'bcc' => sanitize_text_field($_POST['bcc']),
         'title' => sanitize_text_field($_POST['title']),
-        'content-before' => wp_kses_post($_POST['content-before']),
+        'content-before' => wp_kses_post(wp_unslash($_POST['content-before'])),
         'google-business-url' => sanitize_text_field($_POST['google-business-url']),
         'google-review-image' => sanitize_text_field($_POST['google-review-image']),
-        'content-after' => wp_kses_post($_POST['content-after']),
-        'content-footer' => wp_kses_post($_POST['content-footer']),
+        'content-after' => wp_kses_post(wp_unslash($_POST['content-after'])),
+        'content-footer' => wp_kses_post(wp_unslash($_POST['content-footer'])),
         'delay-days' => intval($_POST['delay-days']),
         'sending-period' => intval($_POST['sending-period'])
     ];

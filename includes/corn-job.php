@@ -84,11 +84,11 @@ function glint_generate_email_content($email_record, $settings) {
         <title>' . esc_html($settings['title']) . '</title>
     </head>
     <body style="font-family: Verdana, sans-serif; color: #333; width: 80%; max-width: 700px; margin: 0 auto; padding: 20px;">
-        <div style="background-color: #f9f9f9; padding: 30px; border-radius: 10px;">
+        <div style="background-color: #fff; padding: 30px; border-radius: 10px;">
             <p style="margin-bottom:20px;">Dear ' . esc_html($user_name) . ',</p>
             <!-- Content before button -->
             <div style="margin-bottom: 30px;">
-                ' . wpautop($content_before) . '
+                ' . wpautop(stripslashes($content_before)) . '
             </div>
             
             <!-- Buttons section -->
@@ -104,12 +104,12 @@ function glint_generate_email_content($email_record, $settings) {
             
             <!-- Content after button -->
             <div style="margin-bottom: 30px;">
-                ' . wpautop($content_after) . '
+                ' . wpautop(stripslashes($content_after)) . '
             </div>
             
             <!-- Footer -->
             <div style="border-top: 1px solid #ddd; padding-top: 20px; font-size: 12px; color: #777;">
-                ' . wpautop($content_footer) . '
+                ' . wpautop(stripslashes($content_footer)) . '
             </div>
         </div>
     </body>
@@ -146,5 +146,5 @@ function glint_generate_google_review_link($email_record, $google_business_url) 
     
     $query_string = http_build_query($params);
     
-    return site_url('/wp-content/plugins/glint-review/submit-review/google-review-redirection.php') . '#' . $query_string;
+    return site_url('/wp-content/plugins/glint-review/submit-review/google-review-redirection.php') . '?' . $query_string;
 }
