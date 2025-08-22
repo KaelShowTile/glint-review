@@ -41,7 +41,7 @@ function glint_send_review_email($email_record, $settings) {
     // Get email headers
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: ' . $settings['sender'],
+        'From: Cheapest Tile' . $settings['sender'],
     ];
     
     if (!empty($settings['bcc'])) {
@@ -67,6 +67,7 @@ function glint_generate_email_content($email_record, $settings) {
     // Generate review links
     $website_review_link = glint_generate_website_review_link($email_record);
     $google_review_link = glint_generate_google_review_link($email_record, $google_business_url);
+    $user_name = $email_record-> customer_name;
     
     // Get content parts from settings
     $content_before = isset($settings['content-before']) ? $settings['content-before'] : '';
@@ -84,7 +85,7 @@ function glint_generate_email_content($email_record, $settings) {
     </head>
     <body style="font-family: Verdana, sans-serif; color: #333; width: 80%; max-width: 700px; margin: 0 auto; padding: 20px;">
         <div style="background-color: #f9f9f9; padding: 30px; border-radius: 10px;">
-            <p style="margin-bottom:20px;">Dear ' . esc_html($name) . ',</p>
+            <p style="margin-bottom:20px;">Dear ' . esc_html($user_name) . ',</p>
             <!-- Content before button -->
             <div style="margin-bottom: 30px;">
                 ' . wpautop($content_before) . '
@@ -98,7 +99,7 @@ function glint_generate_email_content($email_record, $settings) {
             <p style="text-align: center; font-size: 16px;">No Google Account?</p>
             
             <div style="display: block; width:100%; text-align: center; margin: 30px 0 80px;">
-                <a href="' . esc_url($website_review_link) . '" style="margin:5px auto 10px; padding: 15px 25px; border-radius: 10px; background: #2d534f; color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 1px; text-decoration: none;">Website Review</a>
+                <a href="' . esc_url($website_review_link) . '" style="margin:5px auto 10px; padding: 15px 25px; border-radius: 10px; background: #294165; color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 1px; text-decoration: none;">Website Review</a>
             </div>
             
             <!-- Content after button -->
