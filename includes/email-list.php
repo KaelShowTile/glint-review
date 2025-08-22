@@ -9,7 +9,7 @@ function glint_wc_product_review_email_list_admin(){
     $table_name = $wpdb->prefix . 'glint_review_feedback_email';
     $emails = $wpdb->get_results("SELECT * FROM $table_name");
 
-    if (empty($reviews)) {
+    if (empty($emails)) {
         echo '<div class="notice notice-warning"><p>No email found.</p></div>';
         return;
     }
@@ -24,38 +24,41 @@ function glint_wc_product_review_email_list_admin(){
     echo '<table class="wp-list-table widefat fixed striped">';
     echo '<thead>
             <tr>
-                <th>Email ID</th>
-                <th>Order ID</th>
+                <th style="width: 60px;">Email ID</th>
+                <th style="width: 80px;">Order No.</th>
                 <th>Product Name</th>
-                <th>Customer Name</th>
-                <th>Customer Email</th>
-                <th>First Sending Date</th>
-                <th>Next Sending Date</th>
-                <th>Total Email Sent</th>
-                <th>Product Reviewed</th>
-                <th>Delete Record</th>
+                <th style="width: 180px;">Customer Name</th>
+                <th style="width: 240px;">Customer Email</th>
+                <th style="width: 140px;">First Sending Date</th>
+                <th style="width: 140px;">Next Sending Date</th>
+                <th style="width: 80px;">Total Email Sent</th>
+                <th style="width: 80px;">Product Reviewed</th>
+                <th style="width: 80px;">Delete Record</th>
             </tr>
         </thead>';
     echo '<tbody>';
 
-    foreach ($reviews as $review) {
-        echo '<tr id="review-row-' . esc_attr($review->email_id) . '">';
-        echo '<td>' . esc_html($review->email_id) . '</td>';
-        echo '<td>' . esc_html($review->order_id) . '</td>';
-        echo '<td>' . esc_html($review->review_item) . '</td>';
-        echo '<td>' . esc_html($review->customer_name) . '</td>';
-        echo '<td>' . esc_html($review->customer_email) . '</td>';
-        echo '<td>' . esc_html($review->first_send_date) . '</td>';
-        echo '<td>' . esc_html($review->next_send_date) . '</td>';  
-        echo '<td>' . esc_html($review->send_times) . '</td>';
-        if($review->check_reviewed == 1){
+    foreach ($emails as $email) {
+
+        $order_permalink = get_site_url() . '/wp-admin/admin.php?page=wc-orders&action=edit&id=' . $email->order_id;
+
+        echo '<tr id="email-row-' . esc_attr($email->email_id) . '">';
+        echo '<td>' . esc_html($email->email_id) . '</td>';
+        echo '<td><a href="' . $order_permalink . '">#' . esc_html($email->order_id) . '</a></td>';
+        echo '<td>' . esc_html($email->review_item) . '</td>';
+        echo '<td>' . esc_html($email->customer_name) . '</td>';
+        echo '<td>' . esc_html($email->customer_email) . '</td>';
+        echo '<td>' . esc_html($email->first_send_date) . '</td>';
+        echo '<td>' . esc_html($email->next_send_date) . '</td>';  
+        echo '<td>' . esc_html($email->send_times) . '</td>';
+        if($email->check_reviewed == 1){
             echo '<td>Yes</td>';
         }else{
             echo '<td>No</td>';
         }
         echo '<td>
-                <button class="delete-review-button button button-danger" 
-                        data-review-id="' . esc_attr($review->email_id) . '">
+                <button class="delete-email-button button button-danger" 
+                        data-email-id="' . esc_attr($email->email_id) . '">
                     Delete
                 </button>
             </td>';
@@ -66,3 +69,31 @@ function glint_wc_product_review_email_list_admin(){
     echo '</table>';
     echo '</div>';
 }
+
+function delete_email() 
+{
+    global $wpdb;
+
+    // Check if the request is valid
+    if (!isset($_POST['email_id'])) {
+        wp_send_json_error('Invalid request.');
+    }
+
+    $email_id = intval($_POST['email_id']);
+    $table_name = $wpdb->prefix . 'glint_review_feedback_email';
+    $result = $wpdb->delete(
+        $table_name,
+        array('email_id' => $email_id),
+        array('%d')
+    );
+
+    error_log($table_name . ' ' . $email_id);
+
+    // Check if the deletion was successful
+    if ($result !== false) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error('Failed to delete the email. ');
+    }
+}
+add_action('wp_ajax_delete_email', 'delete_email');

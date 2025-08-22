@@ -1,10 +1,10 @@
 <?php 
 
-add_action('woocommerce_checkout_order_processed', 'glint_record_order_for_review', 10, 1);
+add_action('woocommerce_checkout_order_processed', 'glint_record_order_for_review', 10, 3);
 
 //Get data for new email record
 function glint_record_order_for_review($order_id, $posted_data, $order) {
-
+    
     if (!$order_id || glint_order_already_recorded($order_id)) {
         return;
     }
@@ -22,7 +22,7 @@ function glint_record_order_for_review($order_id, $posted_data, $order) {
     // Get customer details
     $customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
     $customer_email = $order->get_billing_email();
-    
+
     // Get the first product from the order (you might want to adjust this logic)
     $items = $order->get_items();
     $first_item = reset($items);
@@ -77,17 +77,20 @@ function glint_order_already_recorded($order_id) {
 function glint_insert_review_email_record($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'glint_review_feedback_email';
+
+    error_log('Updating Database with data: ' . print_r($data, true));
     
     // Validate required fields
     $required = ['order_id', 'customer_email', 'review_item'];
     foreach ($required as $field) {
         if (empty($data[$field])) {
             error_log("Missing required field for review email record: $field");
+            error_log("Data received: " . print_r($data, true));
             return false;
         }
     }
     
-    // Set default values for optional fields
+    // Set default values only for missing optional fields
     $defaults = [
         'customer_name' => '',
         'review_item_link' => '',
@@ -97,20 +100,40 @@ function glint_insert_review_email_record($data) {
         'send_times' => 0
     ];
     
-    $data = wp_parse_args($data, $defaults);
+    // Merge defaults without overwriting existing values
+    foreach ($defaults as $key => $value) {
+        if (!isset($data[$key])) {
+            $data[$key] = $value;
+        }
+    }
+    
+    // Define the format for each field
+    $format = [
+        'order_id' => '%d',
+        'customer_name' => '%s',
+        'customer_email' => '%s',
+        'review_item' => '%s',
+        'review_item_link' => '%s',
+        'check_reviewed' => '%d',
+        'first_send_date' => '%s',
+        'next_send_date' => '%s',
+        'send_times' => '%d'
+    ];
     
     // Insert the record
     $result = $wpdb->insert(
         $table_name,
         $data,
-        ['%d', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%d']
+        $format
     );
     
     if ($result === false) {
         error_log("Failed to insert review email record: " . $wpdb->last_error);
+        error_log("Attempted to insert: " . print_r($data, true));
         return false;
     }
     
+    error_log("Successfully inserted record with ID: " . $wpdb->insert_id);
     return $wpdb->insert_id;
 }
 
