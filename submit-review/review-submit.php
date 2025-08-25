@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_rating = isset($_POST['product_rating']) ? intval($_POST['product_rating']) : null; 
 
     // Validate required fields
-    if (empty($email_id) || empty($product_id) || empty($customer_name) || empty($customer_email) || empty($product_review) || $product_rating === null) {
+    if (empty($product_id) || empty($customer_name) || empty($customer_email) || empty($product_review) || $product_rating === null) {
         echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
         exit;
     }
@@ -101,8 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Close the statement and connection
     $stmt->close();
     $mysqli->close();
-
-    glint_confirm_review_checked($email_id);
+    
+    if($email_id){
+        glint_confirm_review_checked($email_id);
+    }
+    
 
     // Return success response
     echo json_encode(['status' => 'success', 'message' => 'Data and images uploaded successfully.']);

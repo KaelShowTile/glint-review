@@ -252,7 +252,7 @@ function glint_generate_test_email() {
     $mock_email_record = (object) [
         'email_id' => 999,
         'order_id' => 12345,
-        'customer_name' => 'Kael Testing',
+        'customer_name' => 'Customer',
         'customer_email' => 'kaelshowtile@gmail.com',
         'review_item' => 'Sample Tile Product',
         'review_item_link' => get_site_url() . '/product/mineral-quartz-matt-tile-200x200-code02309/',
