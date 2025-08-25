@@ -92,7 +92,7 @@ function glint_generate_email_content($email_record, $settings) {
             
             <p style="margin-bottom:20px;">Hi ' . esc_html($user_name) . ',</p>
             <!-- Content before button -->
-            <div style="margin-bottom: 30px;">
+            <div style="margin-bottom: 30px; font-size: 14px; letter-spacing: -0.2px; line-height: 1.5;">
                 ' . wpautop(stripslashes($content_before)) . '
             </div>
             
@@ -105,10 +105,10 @@ function glint_generate_email_content($email_record, $settings) {
                 <a href="' . esc_url($google_review_link) . '" style="margin:5px auto 10px; padding: 15px 25px; border-radius: 10px; background: #294165; color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 1px; text-decoration: none;">Google Review</a>
             </div>
 
-            <p style="text-align: center; font-size: 16px;">No Google Account? Leave a <a href="' . esc_url($website_review_link) . '" style=" color: #294165;"><b>Website Review</b></a> (no login needed)</p>
+            <p style="font-size: 14px; letter-spacing: -0.2px;">No Google Account? Leave a <a href="' . esc_url($website_review_link) . '" style=" color: #294165;"><b>Website Review</b></a> (no login needed)</p>
             
             <!-- Content after button -->
-            <div style="margin-bottom: 30px;">
+            <div style="margin-bottom: 30px; font-size: 14px; letter-spacing: -0.2px; line-height: 1.5;">
                 ' . wpautop(stripslashes($content_after)) . '
             </div>
             
