@@ -31,6 +31,12 @@ function glint_wc_product_review_edm_setting_admin() {
                 <p>Email Title:</p>
                 <input type="text" name="title" value="<?php echo esc_attr($settings['title']); ?>" placeholder="Email Subject">
             </div>
+
+            <div class="input-section google-image-section">
+                <p>Logo on the top of Email:</p>
+                <input type="text" name="email-header-logo" value="<?php echo esc_attr($settings['email-header-logo']); ?>" placeholder="https://">
+            </div>
+
             <div class="input-section content-before-section">
                 <p>Email Content Before Review Button:</p>
                 <?php 
@@ -113,6 +119,7 @@ function get_all_edm_setting() {
         'sender' => '',
         'bcc' => '',
         'title' => '',
+        'email-header-logo' => '',
         'content-before' => '',
         'google-business-url' => '',
         'google-review-image' => '',
@@ -163,6 +170,7 @@ function save_all_edm_setting(){
         'sender' => sanitize_text_field($_POST['sender']),
         'bcc' => sanitize_text_field($_POST['bcc']),
         'title' => sanitize_text_field($_POST['title']),
+        'email-header-logo' => sanitize_text_field($_POST['email-header-logo']),
         'content-before' => wp_kses_post(wp_unslash($_POST['content-before'])),
         'google-business-url' => sanitize_text_field($_POST['google-business-url']),
         'google-review-image' => sanitize_text_field($_POST['google-review-image']),

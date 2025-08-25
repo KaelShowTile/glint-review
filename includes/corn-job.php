@@ -74,6 +74,7 @@ function glint_generate_email_content($email_record, $settings) {
     $content_after = isset($settings['content-after']) ? $settings['content-after'] : '';
     $content_footer = isset($settings['content-footer']) ? $settings['content-footer'] : '';
     $google_img_url = isset($settings['google-review-image']) ? $settings['google-review-image'] : '';
+    $email_logo_url = isset($settings['email-header-logo']) ? $settings['email-header-logo'] : '';
     
     // Build the email HTML
     $email_html = '
@@ -85,7 +86,11 @@ function glint_generate_email_content($email_record, $settings) {
     </head>
     <body style="font-family: Verdana, sans-serif; color: #333; width: 80%; max-width: 700px; margin: 0 auto; padding: 20px;">
         <div style="background-color: #fff; padding: 30px; border-radius: 10px;">
-            <p style="margin-bottom:20px;">Dear ' . esc_html($user_name) . ',</p>
+            
+            <div style="text-align: center;"><img style="max-width:200px;" src="' . esc_url($email_logo_url) . '"></div>
+            <h1 style="text-align: center; font-size: 28px; margin-bottom: 40px; letter-spacing: -0.5px;">We want to make sure you have the best tile shopping experience!</h1>
+            
+            <p style="margin-bottom:20px;">Hi ' . esc_html($user_name) . ',</p>
             <!-- Content before button -->
             <div style="margin-bottom: 30px;">
                 ' . wpautop(stripslashes($content_before)) . '
@@ -96,11 +101,11 @@ function glint_generate_email_content($email_record, $settings) {
                 <a href="' . esc_url($google_review_link) . '"><img src="' . esc_url($google_img_url) . '" alt="Google Reviews" style="width: 100%; height: auto;"></a>
             </div>
             
-            <p style="text-align: center; font-size: 16px;">No Google Account?</p>
-            
             <div style="display: block; width:100%; text-align: center; margin: 30px 0 80px;">
-                <a href="' . esc_url($website_review_link) . '" style="margin:5px auto 10px; padding: 15px 25px; border-radius: 10px; background: #294165; color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 1px; text-decoration: none;">Website Review</a>
+                <a href="' . esc_url($google_review_link) . '" style="margin:5px auto 10px; padding: 15px 25px; border-radius: 10px; background: #294165; color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 1px; text-decoration: none;">Google Review</a>
             </div>
+
+            <p style="text-align: center; font-size: 16px;">No Google Account? Leave a <a href="' . esc_url($website_review_link) . '" style=" color: #294165;"><b>Website Review</b></a> (no login needed)</p>
             
             <!-- Content after button -->
             <div style="margin-bottom: 30px;">
