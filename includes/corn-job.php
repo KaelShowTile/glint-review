@@ -49,12 +49,6 @@ function glint_send_review_email($email_record, $settings) {
         'Content-Type: text/html; charset=UTF-8',
         'From: Cheapestiles <' . $settings['sender'] . '>',
     ];
-
-    error_log($email_content);
-    error_log($email_record->customer_email);
-    error_log($settings['sender']);
-    error_log($settings['bcc']);
-    error_log($settings['title']);
     
     if (!empty($settings['bcc'])) {
         $headers[] = 'Bcc: ' . $settings['bcc'];
@@ -67,12 +61,6 @@ function glint_send_review_email($email_record, $settings) {
         $email_content,
         $headers
     );
-
-    error_log('wp_mail() returned: ' . var_export($sent, true));
-    global $phpmailer;
-    if (isset($phpmailer) && is_wp_error($phpmailer->ErrorInfo)) {
-        error_log('PHPMailer error: ' . $phpmailer->ErrorInfo);
-    }
     
     return $sent;
 }

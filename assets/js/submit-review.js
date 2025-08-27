@@ -3,7 +3,9 @@ function getHashParam(param)
 {
     const hash = window.location.hash.substring(1); // Remove the '#' symbol
     const hashParams = new URLSearchParams(hash);
-    return hashParams.get(param);
+    let decoded = decodeURIComponent(hashParams.get(param));
+    decoded = decoded.replace(/\+/g, ' ');
+    return decoded;
 }
 
 const starRating = document.querySelector('.star-rating');
