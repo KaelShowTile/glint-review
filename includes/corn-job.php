@@ -4,6 +4,8 @@ function glint_check_and_send_review_emails() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'glint_review_feedback_email';
     
+    error_log('trigger check function');
+
     // Get emails that are due to be sent (next_send_date is today or earlier)
     // and where the customer hasn't reviewed yet
     $today = current_time('Y-m-d');
@@ -19,15 +21,18 @@ function glint_check_and_send_review_emails() {
         return;
     }
     
+    error_log('found emails');
+
     // Get email settings
     $settings = get_all_edm_setting();
     
     foreach ($due_emails as $email_record) {
         // Generate and send the email
         $sent = glint_send_review_email($email_record, $settings);
-        
+        error_log($sent);
         if ($sent) {
             // Update the record
+            error_log('email sent');
             glint_update_email_record_after_sending($email_record->email_id, false);
         }
     }
@@ -35,14 +40,21 @@ function glint_check_and_send_review_emails() {
 
 // Send email
 function glint_send_review_email($email_record, $settings) {
+
     // Generate the email content
     $email_content = glint_generate_email_content($email_record, $settings);
     
     // Get email headers
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: Cheapest Tile' . $settings['sender'],
+        'From: Cheapestiles <' . $settings['sender'] . '>',
     ];
+
+    error_log($email_content);
+    error_log($email_record->customer_email);
+    error_log($settings['sender']);
+    error_log($settings['bcc']);
+    error_log($settings['title']);
     
     if (!empty($settings['bcc'])) {
         $headers[] = 'Bcc: ' . $settings['bcc'];
@@ -55,6 +67,12 @@ function glint_send_review_email($email_record, $settings) {
         $email_content,
         $headers
     );
+
+    error_log('wp_mail() returned: ' . var_export($sent, true));
+    global $phpmailer;
+    if (isset($phpmailer) && is_wp_error($phpmailer->ErrorInfo)) {
+        error_log('PHPMailer error: ' . $phpmailer->ErrorInfo);
+    }
     
     return $sent;
 }
