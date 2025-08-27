@@ -106,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         glint_confirm_review_checked($email_id);
     }
     
-
     // Return success response
     echo json_encode(['status' => 'success', 'message' => 'Data and images uploaded successfully.']);
 } else {

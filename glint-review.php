@@ -95,8 +95,8 @@ function external_product_review_menu() {
 }
 add_action('admin_menu', 'external_product_review_menu');
 
-//testing
-//add_action('init', 'glint_manual_trigger_cron_test');
+//testing ?glint_test_cron=1
+add_action('init', 'glint_manual_trigger_cron_test');
 function glint_manual_trigger_cron_test() {
     if (isset($_GET['glint_test_cron']) && current_user_can('manage_options')) {
         // Run the cron function
