@@ -77,7 +77,8 @@ function glint_show_product_review($product_id)
                     $images = explode(',', $review->review_imgs);
                     $output .= '<div class="review-images">';
                     foreach ($images as $image) {
-                        $output .= '<a href="' . GLINT_WC_PRODUCT_REVIEW_URL . 'submit-review/' . $image . '" lightbox-added><img src="/submit-review/' . $image . '" alt="Review Image" "></a>';
+                        $images_url = get_site_url() . '/wp-content/uploads/glint-review/' . $image;
+                        $output .= '<a href="' . $images_url . '" lightbox-added><img src="' . $images_url . '" alt="Review Image" "></a>';
                     }
                     $output .= '</div>';
                 }

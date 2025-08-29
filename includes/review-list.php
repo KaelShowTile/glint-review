@@ -54,8 +54,8 @@ function glint_wc_product_review_list_admin()
             $image_paths = explode(',', $review->review_imgs); // Split URLs by comma
             foreach ($image_paths as $path) 
             {
-                $full_url = GLINT_WC_PRODUCT_REVIEW_URL . 'submit-review/' . trim($path); 
-                echo '<a href="'. $full_url . '" target="_blank" rel="nofollow"><img src="' . esc_url($full_url) . '" style="max-width: 60px; height: auto; margin: 5px;" /></a>';
+                $images_url = get_site_url() . '/wp-content/uploads/glint-review/' . trim($path);
+                echo '<a href="'. $images_url . '" target="_blank" rel="nofollow"><img src="' . esc_url($images_url) . '" style="max-width: 60px; height: auto; margin: 5px;" /></a>';
             }
         }
         echo '</td>';

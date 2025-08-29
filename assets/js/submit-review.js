@@ -180,7 +180,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 console.log('Processing file:', file.name);
-                const compressedFile = await compressImage(file, 800, 600, 1, customerNameInput.value, i + 1); // Max size: 1MB
+                const compressedFile = await compressImage(file, 800, 600, 0.1, customerNameInput.value, i + 1); // Max size: 1MB
                 compressedFiles.push(compressedFile);
             }
 

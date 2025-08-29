@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Directory to save uploaded images
-    $uploadDir = 'img/';
+    $uploadDir = $wp_root . '/wp-content/uploads/glint-review/';
     if (!is_dir($uploadDir)) 
     {
         mkdir($uploadDir, 0755, true); // Create the directory if it doesn't exist
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Move the uploaded file to the desired directory
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
-                    $uploadedImageUrls[] = $uploadFile; // Store the file path
+                    $uploadedImageUrls[] = $fileName; // Store the file path
                 } else {
                     echo json_encode(['status' => 'error', 'message' => 'Error moving uploaded file: ' . $fileName]);
                     exit;
