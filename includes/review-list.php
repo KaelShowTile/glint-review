@@ -22,7 +22,8 @@ function glint_wc_product_review_list_admin()
 
     // Display the data in a table
     echo '<div class="wrap">';
-    echo '<h1>Reviews</h1>';
+    echo '<h1 style="float:left;">Reviews</h1>';
+    echo '<button id="generate-review-feed" class="button button-primary button-large" style="float:right;">Update Review Feed</button>';
     echo '<table class="wp-list-table widefat fixed striped">';
     echo '<thead>
             <tr>

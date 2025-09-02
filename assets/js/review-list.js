@@ -111,4 +111,31 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
+    $('#generate-review-feed').click(function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        $(this).text('Generating...').prop('disabled', true);
+
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            data: {
+                action: 'generate_product_review_feed',
+                //nonce: ajax_object.nonce
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Feed generated successfully! File saved at: ' + response.data.path);
+                } else {
+                    alert('Error: ' + response.data);
+                }
+            }
+            
+        });
+
+        $(this).text('Update Review Feed').prop('disabled', false);
+        
+    });
 });

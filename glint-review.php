@@ -21,6 +21,8 @@ require_once plugin_dir_path(__FILE__) . 'includes/email-create.php';
 require_once plugin_dir_path(__FILE__) . 'includes/email-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/email-setting.php';
 require_once plugin_dir_path(__FILE__) . 'includes/corn-job.php';
+require_once plugin_dir_path(__FILE__) . 'includes/review-feed.php';
+require_once plugin_dir_path(__FILE__) . 'includes/ajax-handle.php';
 
 //Add css to frontend
 function glint_wc_product_review_enqueue_styles() {
