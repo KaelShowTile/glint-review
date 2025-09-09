@@ -8,7 +8,6 @@ require_once $wp_root . '/wp-load.php';
 $params = [];
 if (!empty($_GET)) {
     $params = $_GET;
-    error_log('get parameters');
 } 
 // If no GET parameters, try to parse from fragment
 else if (isset($_SERVER['REQUEST_URI'])) {

@@ -87,8 +87,6 @@ function delete_email()
         array('%d')
     );
 
-    error_log($table_name . ' ' . $email_id);
-
     // Check if the deletion was successful
     if ($result !== false) {
         wp_send_json_success();

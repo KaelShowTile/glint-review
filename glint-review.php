@@ -107,7 +107,5 @@ function glint_manual_trigger_cron_test() {
         // Show results
         echo '<div class="notice notice-success"><p>Cron job manually triggered and completed.</p></div>';
         
-        // Log the test
-        error_log('GLINT: Cron job manually triggered via URL');
     }
 }

@@ -77,8 +77,6 @@ function glint_order_already_recorded($order_id) {
 function glint_insert_review_email_record($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'glint_review_feedback_email';
-
-    error_log('Updating Database with data: ' . print_r($data, true));
     
     // Validate required fields
     $required = ['order_id', 'customer_email', 'review_item'];
@@ -133,7 +131,6 @@ function glint_insert_review_email_record($data) {
         return false;
     }
     
-    error_log("Successfully inserted record with ID: " . $wpdb->insert_id);
     return $wpdb->insert_id;
 }
 
