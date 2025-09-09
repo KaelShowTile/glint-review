@@ -96,6 +96,11 @@ function glint_wc_product_review_edm_setting_admin() {
                 <input type="number" name="sending-period" value="<?php echo esc_attr($settings['sending-period']); ?>" min="1" max="30">
             </div>
 
+            <div class="input-section times-limitation">
+                <p>Maximum sending times:</p>
+                <input type="number" name="times-limitation" value="<?php echo esc_attr($settings['times-limitation']); ?>" min="1" max="30">
+            </div>
+
             <button type="submit" id="save-edm-settings" class="button-primary">Save Settings</button>
 
             <div style="margin-top: 30px; padding: 20px; background: #f5f5f5; border: 1px solid #ddd;">
@@ -125,8 +130,9 @@ function get_all_edm_setting() {
         'google-review-image' => '',
         'content-after' => '',
         'content-footer' => '',
-        'delay-days' => '7',
-        'sending-period' => '3'
+        'delay-days' => '14',
+        'sending-period' => '7',
+        'times-limitation' => '3'
     ];
     
     // Check if table exists
@@ -177,7 +183,8 @@ function save_all_edm_setting(){
         'content-after' => wp_kses_post(wp_unslash($_POST['content-after'])),
         'content-footer' => wp_kses_post(wp_unslash($_POST['content-footer'])),
         'delay-days' => intval($_POST['delay-days']),
-        'sending-period' => intval($_POST['sending-period'])
+        'sending-period' => intval($_POST['sending-period']),
+        'times-limitation' => intval($_POST['times-limitation'])
     ];
     
     // Validate required fields
@@ -259,7 +266,8 @@ function glint_generate_test_email() {
         'check_reviewed' => 0,
         'first_send_date' => date('Y-m-d'),
         'next_send_date' => date('Y-m-d'),
-        'send_times' => 0
+        'send_times' => 0,
+        'times-limitation' => 0
     ];
     
     // Generate the email content

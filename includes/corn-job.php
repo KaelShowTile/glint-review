@@ -3,36 +3,34 @@
 function glint_check_and_send_review_emails() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'glint_review_feedback_email';
-    
-    error_log('trigger check function');
 
+    // Get email settings
+    $settings = get_all_edm_setting();
+    $maximum_sending_times = isset($settings['times-limitation']) ? intval($settings['times-limitation']) : 3;
+    
     // Get emails that are due to be sent (next_send_date is today or earlier)
     // and where the customer hasn't reviewed yet
     $today = current_time('Y-m-d');
     $due_emails = $wpdb->get_results($wpdb->prepare(
         "SELECT * FROM $table_name 
          WHERE next_send_date <= %s 
+         AND send_times <= %s
          AND check_reviewed = 0
          ORDER BY next_send_date ASC",
-        $today
+        $today, 
+        $maximum_sending_times
     ));
     
     if (empty($due_emails)) {
         return;
     }
     
-    error_log('found emails');
-
-    // Get email settings
-    $settings = get_all_edm_setting();
-    
     foreach ($due_emails as $email_record) {
         // Generate and send the email
         $sent = glint_send_review_email($email_record, $settings);
-        error_log($sent);
+
         if ($sent) {
             // Update the record
-            error_log('email sent');
             glint_update_email_record_after_sending($email_record->email_id, false);
         }
     }
