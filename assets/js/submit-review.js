@@ -199,8 +199,6 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
         formData.append('product_review', productReviewInput.value);
         formData.append('product_rating', productRating);
 
-        console.log('Form data prepared:', formData);
-
         const response = await fetch('review-submit.php', {
             method: 'POST',
             body: formData,

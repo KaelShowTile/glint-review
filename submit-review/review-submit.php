@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate input data
     $email_id = isset($_POST['email_id']) ? sanitizeInput($_POST['email_id']) : null;
     $product_id = isset($_POST['product_id']) ? sanitizeInput($_POST['product_id']) : null;
-    $customer_name = isset($_POST['customer_name']) ? sanitizeInput($_POST['customer_name']) : null;
-    $customer_email = isset($_POST['customer_email']) ? sanitizeInput($_POST['customer_email']) : null;
-    $product_review = isset($_POST['product_review']) ? sanitizeInput($_POST['product_review']) : null;
+    $customer_name = isset($_POST['customer_name']) ? sanitizeInput(wp_unslash($_POST['customer_name'])) : null;
+    $customer_email = isset($_POST['customer_email']) ? sanitizeInput(wp_unslash($_POST['customer_email'])) : null;
+    $product_review = isset($_POST['product_review']) ? sanitize_textarea_field(wp_unslash($_POST['product_review'])) : null;
     $product_rating = isset($_POST['product_rating']) ? intval($_POST['product_rating']) : null; 
 
     // Validate required fields
