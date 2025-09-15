@@ -1,9 +1,21 @@
 <?php 
 
-add_action('woocommerce_checkout_order_processed', 'glint_record_order_for_review', 10, 3);
+// Hook for traditional checkout (shortcode)
+add_action('woocommerce_checkout_order_processed', 'glint_edm_process_order_traditional', 10, 3);
+
+// Hook for block checkout
+add_action('woocommerce_store_api_checkout_order_processed', 'glint_edm_process_order_block', 10, 1);
+
+function glint_edm_process_order_traditional($order_id, $posted_data, $order) {
+    glint_record_order_for_review($order_id, $order);
+}
+
+function glint_edm_process_order_block($order) {
+    glint_record_order_for_review($order->get_id(), $order);
+}
 
 //Get data for new email record
-function glint_record_order_for_review($order_id, $posted_data, $order) {
+function glint_record_order_for_review($order_id, $order) {
     
     if (!$order_id || glint_order_already_recorded($order_id)) {
         return;
