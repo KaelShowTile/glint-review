@@ -13,8 +13,7 @@ function generate_product_review_feed()
 
     $reviews = $wpdb->get_results("
         SELECT * FROM $table_name 
-        WHERE show_review = 1 
-        AND review_date >= DATE_SUB(NOW(), INTERVAL 60 DAY)
+        WHERE show_review = 1
     ");
 
     // Initialize XML structure
