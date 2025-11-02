@@ -12,7 +12,6 @@ jQuery(document).ready(function($) {
             type: 'POST',
             data: {
                 action: 'save_edm_settings',
-                nonce: glintEdmAdmin.nonce,
                 ...$(this).serializeArray().reduce(function(obj, item) {
                     obj[item.name] = item.value;
                     return obj;

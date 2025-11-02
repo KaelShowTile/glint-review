@@ -3,7 +3,6 @@
 function glint_wc_product_review_edm_setting_admin() {
     wp_enqueue_script('edm-admin', GLINT_WC_PRODUCT_REVIEW_URL . 'assets/js/edm-admin.js', ['jquery', 'wp-util'], '1.0', true);
     wp_localize_script('edm-admin', 'glintEdmAdmin', [
-        'nonce' => wp_create_nonce('glint_edm_nonce'),
         'ajax_url' => admin_url('admin-ajax.php')
     ]);
 
@@ -157,11 +156,6 @@ function get_all_edm_setting() {
 }
 
 function save_all_edm_setting(){
-    if (!check_ajax_referer('glint_edm_nonce', 'nonce', false)) {
-        wp_send_json_error('Security check failed');
-        wp_die();
-    }
-    
     // Check user capabilities
     if (!current_user_can('manage_options')) {
         wp_send_json_error('Unauthorized access');
