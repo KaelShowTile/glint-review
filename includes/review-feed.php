@@ -44,7 +44,7 @@ function generate_product_review_feed()
         $review_element->addChild('review_timestamp', date('c', strtotime($review->review_date)));
         $review_element->addChild('content', htmlspecialchars($review->review_content));
 
-        $review_url = $review_element->addChild('review_url', 'https://www.cheapestiles.com.au/wp-content/plugins/glint-review/submit-review/submit-form.php#product_id=' . htmlspecialchars($review->post_id));
+        $review_url = $review_element->addChild('review_url', htmlspecialchars(get_permalink( $review->post_id )));
         $review_url->addAttribute('type', 'singleton');
 
         $ratings = $review_element->addChild('ratings');
