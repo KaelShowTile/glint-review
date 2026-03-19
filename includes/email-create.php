@@ -35,8 +35,34 @@ function glint_record_order_for_review($order_id, $order) {
     $customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
     $customer_email = $order->get_billing_email();
 
-    // Get the first product from the order (you might want to adjust this logic)
+    // Get email settings for scheduling
+    $settings = get_all_edm_setting();
+    
+    // Check for excluded categories
+    $exclude_categories = isset($settings['exclude-categories']) ? $settings['exclude-categories'] : '';
+    $excluded_slugs = array_filter(array_map('trim', explode(',', $exclude_categories)));
+
     $items = $order->get_items();
+    
+    // Check if order contains any product from excluded categories
+    if (!empty($excluded_slugs)) {
+        foreach ($items as $item) {
+            $product_id = $item->get_product_id();
+            if ($product_id) {
+                $terms = get_the_terms($product_id, 'product_cat');
+                if (!empty($terms) && !is_wp_error($terms)) {
+                    foreach ($terms as $term) {
+                        if (in_array($term->slug, $excluded_slugs)) {
+                            // Skip this order if it contains an excluded category product
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Get the first product from the order (you might want to adjust this logic)
     $first_item = reset($items);
     
     if ($first_item) {
@@ -48,8 +74,6 @@ function glint_record_order_for_review($order_id, $order) {
         return;
     }
     
-    // Get email settings for scheduling
-    $settings = get_all_edm_setting();
     $delay_days = isset($settings['delay-days']) ? intval($settings['delay-days']) : 7;
     
     // Calculate first send date
@@ -193,4 +217,3 @@ function glint_update_email_record_after_sending($email_id, $reviewed = false) {
     
     return true;
 }
-

@@ -90,6 +90,11 @@ function glint_wc_product_review_edm_setting_admin() {
                 <input type="number" name="delay-days" value="<?php echo esc_attr($settings['delay-days']); ?>" min="1" max="30">
             </div>
 
+            <div class="input-section exclude-categories-section">
+                <p>Exclude Product Categories (comma separated slugs):</p>
+                <input type="text" name="exclude-categories" value="<?php echo esc_attr($settings['exclude-categories']); ?>" placeholder="e.g. accessories, parts">
+            </div>
+
             <div class="input-section sending-period-section">
                 <p>Days between sending attempts:</p>
                 <input type="number" name="sending-period" value="<?php echo esc_attr($settings['sending-period']); ?>" min="1" max="30">
@@ -131,7 +136,8 @@ function get_all_edm_setting() {
         'content-footer' => '',
         'delay-days' => '14',
         'sending-period' => '7',
-        'times-limitation' => '3'
+        'times-limitation' => '3',
+        'exclude-categories' => ''
     ];
     
     // Check if table exists
@@ -178,7 +184,8 @@ function save_all_edm_setting(){
         'content-footer' => wp_kses_post(wp_unslash($_POST['content-footer'])),
         'delay-days' => intval($_POST['delay-days']),
         'sending-period' => intval($_POST['sending-period']),
-        'times-limitation' => intval($_POST['times-limitation'])
+        'times-limitation' => intval($_POST['times-limitation']),
+        'exclude-categories' => sanitize_text_field($_POST['exclude-categories'])
     ];
     
     // Validate required fields
