@@ -76,6 +76,9 @@ function get_parent_directory_url($url) {
             <div data-coreui-toggle="rating" data-coreui-value="3"></div>
 
             <p>Your Comment</p>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <button type="button" id="emoji-trigger" style="background: transparent; border: 1px solid #ccc; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-family: 'Montserrat', sans-serif;">😀 Add Emoji</button>
+            </div>
             <textarea id="product_review" name="product_review" value="" rows="6" required></textarea>
             
             <p for="images">Upload images (up to 9):</p>

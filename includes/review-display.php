@@ -83,7 +83,7 @@ function glint_show_product_review($product_id)
                     $output .= '</div>';
                 }
 
-                $output .= '<p class= "review-content">' . esc_html($review->review_content) . '</p>';
+                $output .= '<p class= "review-content">' . nl2br(esc_html($review->review_content)) . '</p>';
 
                 $output .= '</li>';
             }

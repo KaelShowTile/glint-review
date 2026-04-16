@@ -61,6 +61,35 @@ if (customerEmail)
     customerEmailInput.value = customerEmail;
 } 
 
+// --- Emoji Picker Integration ---
+const emojiTrigger = document.getElementById('emoji-trigger');
+if (emojiTrigger && productReviewInput) {
+    import('https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js')
+        .then(module => {
+            const EmojiButton = module.EmojiButton;
+            const picker = new EmojiButton({
+                position: 'bottom-start',
+                theme: 'light'
+            });
+
+            picker.on('emoji', selection => {
+                // Insert emoji exactly at the current cursor position
+                const startPos = productReviewInput.selectionStart;
+                const endPos = productReviewInput.selectionEnd;
+                const text = productReviewInput.value;
+                productReviewInput.value = text.substring(0, startPos) + selection.emoji + text.substring(endPos, text.length);
+                productReviewInput.selectionStart = productReviewInput.selectionEnd = startPos + selection.emoji.length;
+                productReviewInput.focus();
+            });
+
+            emojiTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                picker.togglePicker(emojiTrigger);
+            });
+        })
+        .catch(err => console.error('Failed to load EmojiButton:', err));
+}
+
 
 let selectedFiles = [];
 
@@ -164,7 +193,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
 {
     e.preventDefault();
 
-    const productRating = document.getElementById('rating-value').textContent;
+    let productRating = document.getElementById('rating-value').textContent;
 
     if(productRating == 0)
     {
@@ -209,8 +238,13 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
         }
 
         const data = await response.json();
-        alert('We received your review. Thank you for rating our product!');
-        window.location.href = productLink;
+        
+        if (data.status === 'success') {
+            alert('We received your review. Thank you for rating our product!');
+            window.location.href = productLink;
+        } else {
+            alert('Error submitting review: ' + data.message);
+        }
 
     } catch (error) {
         console.error('Error during form submission:', error);
